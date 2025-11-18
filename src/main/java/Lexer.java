@@ -12,65 +12,66 @@ public class Lexer {
 
     public List<Token> lex() {
         while (!isAtEnd()) {
-            char c = advance();
-            switch (c) {
-                case '📦':
+            String lexeme = advance();
+            char c = lexeme.charAt(0);
+            switch (lexeme) {
+                case "📦":
                     add(Token.Type.ASSIGN, "📦");
                     break;
-                case '📢':
-                case '🖨':
-                    add(Token.Type.PRINT, String.valueOf(c));
+                case "📢":
+                case "🖨":
+                    add(Token.Type.PRINT, lexeme);
                     break;
-                case '➕':
+                case "➕":
                     add(Token.Type.PLUS, "➕");
                     break;
-                case '➖':
+                case "➖":
                     add(Token.Type.MINUS, "➖");
                     break;
-                case '✖':
+                case "✖":
                     add(Token.Type.STAR, "✖️");
                     break;
-                case '➗':
+                case "➗":
                     add(Token.Type.SLASH, "➗");
                     break;
-                case '❓':
+                case "❓":
                     add(Token.Type.IF, "❓");
                     break;
-                case '🔁':
+                case "🔁":
                     add(Token.Type.WHILE, "🔁");
                     break;
-                case '{':
+                case "{":
                     add(Token.Type.LBRACE, "{");
                     break;
-                case '}':
+                case "}":
                     add(Token.Type.RBRACE, "}");
                     break;
-                case '(':
+                case "(":
                     add(Token.Type.LPAREN, "(");
                     break;
-                case ')':
+                case ")":
                     add(Token.Type.RPAREN, ")");
                     break;
-                case '>':
+                case ">":
                     add(Token.Type.GREATER, ">");
                     break;
-                case '<':
+                case "<":
                     add(Token.Type.LESS, "<");
                     break;
-                case '=':
+                case "=":
                     if (match('=')) {
                         add(Token.Type.EQUAL_EQUAL, "==");
                     }
                     break;
-                case '!':
+                case "!":
                     if (match('=')) {
                         add(Token.Type.BANG_EQUAL, "!=");
                     }
                     break;
-                case ';':
+                case ";":
                     add(Token.Type.SEMICOLON, ";");
                     break;
-                case ' ': case '\r': case '\t': case '\n':
+                case " ": case "\r": case "\t": case "\n":
                     break; // skip whitespace
                 default:
                     if (Character.isDigit(c)) {
@@ -88,8 +89,12 @@ public class Lexer {
         return current >= source.length();
     }
 
-    private char advance() {
-        return source.charAt(current++);
+    private String advance() {
+        int codePoint = source.codePointAt(current);
+        int charCount = Character.charCount(codePoint);
+        String result = new String(Character.toChars(codePoint));
+        current += charCount;
+        return result;
     }
 
     private boolean match(char expected) {

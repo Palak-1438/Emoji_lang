@@ -21,7 +21,11 @@ public class Interpreter {
         } else if (stmt instanceof Ast.Block b) {
             for (Ast.Stmt inner : b.statements) exec(inner);
         } else if (stmt instanceof Ast.If i) {
-            if (eval(i.condition) != 0) exec(i.thenBranch);
+            if (eval(i.condition) != 0) {
+                exec(i.thenBranch);
+            } else if (i.elseBranch != null) {
+                exec(i.elseBranch);
+            }
         } else if (stmt instanceof Ast.While w) {
             while (eval(w.condition) != 0) exec(w.body);
         } else {
@@ -46,6 +50,10 @@ public class Interpreter {
                 case MINUS -> left - right;
                 case STAR -> left * right;
                 case SLASH -> left / right;
+                case GREATER -> left > right ? 1.0 : 0.0;
+                case LESS -> left < right ? 1.0 : 0.0;
+                case EQUAL_EQUAL -> left == right ? 1.0 : 0.0;
+                case BANG_EQUAL -> left != right ? 1.0 : 0.0;
                 default -> throw new RuntimeException("Unsupported operator: " + b.operator);
             };
         }
