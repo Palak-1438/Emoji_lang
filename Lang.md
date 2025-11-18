@@ -1,6 +1,6 @@
 # Lang.md
 
-This file provides guidance to WARP (warp.dev) when working with code in this repository.
+This file provides guidance when working with code in this repository.
 
 ## Core commands
 
