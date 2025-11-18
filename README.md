@@ -21,8 +21,10 @@ While | 🔁 | `🔁 x > 0 { ... }`
 mvn package
 java -cp target/emoji-lang-0.1.0-SNAPSHOT.jar Main example.emj
 ```
+```bash
 mvn package
 java -cp target/emoji-lang-0.1.0-SNAPSHOT.jar EmojiStudio
+```
 ## Roadmap
 
 - Extend control flow (else, comparisons, etc.)
